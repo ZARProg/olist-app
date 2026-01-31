@@ -1,25 +1,23 @@
 <?php
 
-namespace Database\Seeders;
-
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-
-class DatabaseSeeder extends Seeder
+public function run(): void
 {
-    use WithoutModelEvents;
+    // Buat User Admin
+    User::factory()->create([
+        'name' => 'Admin Olist',
+        'email' => 'admin@olist.com',
+        'password' => bcrypt('password123'),
+    ]);
 
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-    }
+    // Tambahkan Data Produk Manual (Contoh)
+    \App\Models\Product::create([
+        'name' => 'Minimalist Mechanical Keyboard',
+        'price' => 1500000,
+        'description' => 'Aesthetic glassmorphism design keyboard.',
+        'image' => 'product1.png', // Pastikan file ada di public/
+        'stock' => 10
+    ]);
+    
+    // Atau jika kamu sudah buat Factory untuk Product:
+    // \App\Models\Product::factory(10)->create();
 }
