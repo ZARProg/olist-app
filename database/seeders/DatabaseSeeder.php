@@ -1,23 +1,22 @@
 <?php
 
-public function run(): void
-{
-    // Buat User Admin
-    User::factory()->create([
-        'name' => 'Admin Olist',
-        'email' => 'admin@olist.com',
-        'password' => bcrypt('password123'),
-    ]);
+namespace Database\Seeders;
 
-    // Tambahkan Data Produk Manual (Contoh)
-    \App\Models\Product::create([
-        'name' => 'Minimalist Mechanical Keyboard',
-        'price' => 1500000,
-        'description' => 'Aesthetic glassmorphism design keyboard.',
-        'image' => 'product1.png', // Pastikan file ada di public/
-        'stock' => 10
-    ]);
-    
-    // Atau jika kamu sudah buat Factory untuk Product:
-    // \App\Models\Product::factory(10)->create();
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
+class DatabaseSeeder extends Seeder
+{
+    public function run(): void
+    {
+        // Cek dulu apakah user sudah ada supaya tidak error duplikat
+        if (!User::where('email', 'admin@olist.com')->exists()) {
+            User::create([
+                'name' => 'Admin Olist',
+                'email' => 'admin@olist.com',
+                'password' => Hash::make('password123'),
+            ]);
+        }
+    }
 }
